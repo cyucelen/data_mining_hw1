@@ -5,12 +5,13 @@ from sklearn.linear_model import LogisticRegression, LinearRegression, Lasso, Ri
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from sklearn.naive_bayes import GaussianNB
 import pandas as pd
+import numpy as np
 import warnings
 warnings.filterwarnings("ignore", category=FutureWarning)
 
 
 def print_formatted_score(modelName, scoreType, value):
-    print('{:^28} | {:^12}: {:^8}'.format(modelName, scoreType, str(value)))
+    print('{:^28} | {:^12}: {:^8}'.format(modelName, scoreType, str(np.around(value, decimals=8))))
     print("-----------------------------")
 
 
@@ -39,13 +40,13 @@ def get_regression_models():
         ("Linear Regression", LinearRegression()),
     ]
 
-    for i in range(1, 11):
-        alpha = i * 0.01
-        models.append(("Ridge | alpha = %.2f" % alpha, Ridge(alpha=alpha)))
+    for i in range(1, 6):
+        alpha = pow(10, -i)
+        models.append(("Ridge | alpha = %.5f" % alpha, Ridge(alpha=alpha)))
 
-    for i in range(1, 11):
-        alpha = i * 0.01
-        models.append(("Lasso | alpha = %.2f" % alpha, Lasso(alpha=alpha, max_iter=10e5)))
+    for i in range(1, 6):
+        alpha = pow(10, -i)
+        models.append(("Lasso | alpha = %.5f" % alpha, Lasso(alpha=alpha, max_iter=10e5)))
 
     return models
 
